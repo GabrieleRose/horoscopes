@@ -1,0 +1,55 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #fafafa;
+	margin: 0;
+	padding: 40px;
+}
+
+.horo-app {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border-radius: 12px;
+	max-width: 500px;
+	padding: 40px 40px 40px 40px;
+	box-sizing: border-box;
+}
+
+.horo-app h1 {
+	color: #333333;
+	font-size: 32px;
+	margin: 40px 0 40px 0;
+}
+
+.horo-app label {
+	display: block;
+	color: #333333;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+
+.horo-app select {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 15px 12px;
+	font-size: 20px;
+	border: 1px solid #999999;
+	border-radius: 6px;
+	background-color: #ffffff;
+	margin-bottom: 25px;
+}
+
+.horo-app button {
+	background-color: #5a7a9e;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 15px 30px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.horo-app button:hover {
+	background-color: #46627f;
+}
