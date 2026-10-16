@@ -114,7 +114,7 @@ const horoscopeData = {
 	}
 };
 
-// grab the dropdown & button from page
+// grab dropdown & button from page
 const zodiacSelect = document.querySelector("#zodiac-sign");
 const submitButton = document.querySelector("button");
 
@@ -126,20 +126,29 @@ function submitForm() {
 	// save array of signs
 	const signs = horoscopeData.horoscopes.astroSigns;
 
+	// variable to hold the matching sign data
+	let matchingSign = "";
+
 	// go thru every sign in the array
-	for (const sign of signs) {
+	for (const currentSign of signs) {
 		// check if sign matches the one the user picked
-		if (sign.sign === selectedSign) {
-			// pass the matching sign to displayHoroscope
-			displayHoroscope(sign);
+		if (currentSign.sign === selectedSign) {
+			// save the match
+			matchingSign = currentSign;
 		}
+	}
+
+	// only display if a match was found
+	if (matchingSign) {
+		// pass the matching sign to displayHoroscope
+		displayHoroscope(matchingSign);
 	}
 }
 
 // take a sign obj & render info to screen
-function displayHoroscope(sign) {
+function displayHoroscope(signData) {
 	// if there are old results on the page, remove them
-	const oldResults = document.querySelector(".horo-app div");
+	const oldResults = document.querySelector(".results");
 	if (oldResults) {
 		oldResults.remove();
 	}
@@ -151,24 +160,52 @@ function displayHoroscope(sign) {
 	const dateRange = document.createElement("p");
 	const horoscope = document.createElement("p");
 
+	resultsDiv.className = "results";
+
 	// set img src & alt text, then text for each p
-	symbol.src = sign.icon;
-	symbol.alt = sign.sign + " symbol";
-	signName.textContent = "Your sign is " + sign.sign + ".";
+	symbol.src = signData.icon;
+	symbol.alt = signData.sign + " symbol";
+	signName.textContent = "Your sign is " + signData.sign + ".";
 	dateRange.textContent =
-		"The date range for " + sign.sign + " is " + sign.dateRange + ".";
-	horoscope.textContent = "Your horoscope today is " + sign.dailyHoroscope;
+		"The date range for " + signData.sign + " is " + signData.dateRange + ".";
+	horoscope.textContent = "Your horoscope today is " + signData.dailyHoroscope;
+
+	// pick accent color based on sign's element
+	let accentColor;
+	if (["Aries", "Leo", "Sagittarius"].includes(signData.sign)) {
+		accentColor = "#c0562f"; // fire
+	} else if (["Taurus", "Virgo", "Capricorn"].includes(signData.sign)) {
+		accentColor = "#5b7f4a"; // earth
+	} else if (["Gemini", "Libra", "Aquarius"].includes(signData.sign)) {
+		accentColor = "#5a7a9e"; // air
+	} else {
+		accentColor = "#6b5b95"; // water
+	}
+
+	// style results div
+	resultsDiv.style.padding = "20px";
+	resultsDiv.style.marginTop = "20px";
+	resultsDiv.style.borderRadius = "10px";
+	resultsDiv.style.border = "2px solid " + accentColor;
+
+	// style symbol
+	symbol.style.width = "64px";
+	symbol.style.height = "64px";
+
+	// style text elements
+	signName.style.fontSize = "22px";
+	signName.style.fontWeight = "bold";
+	signName.style.color = accentColor;
+	dateRange.style.fontSize = "18px";
+	dateRange.style.color = "#333333";
+	horoscope.style.fontSize = "18px";
+	horoscope.style.color = "#333333";
 
 	// put img & p's inside div
 	resultsDiv.appendChild(symbol);
 	resultsDiv.appendChild(signName);
 	resultsDiv.appendChild(dateRange);
 	resultsDiv.appendChild(horoscope);
-
-	// add spacing & rounded corners to div
-	resultsDiv.style.padding = "20px";
-	resultsDiv.style.marginTop = "20px";
-	resultsDiv.style.borderRadius = "10px";
 
 	// dom update: add div to .horo-app section
 	document.querySelector(".horo-app").appendChild(resultsDiv);
